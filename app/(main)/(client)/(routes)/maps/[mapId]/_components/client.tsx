@@ -1,18 +1,15 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { CommentValue, FoodMap, TProfile } from "@/types";
 import TabsImageGallery from "./tabs-image-gallery";
 import InfoSection from "./info-section";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import RatingStar from "./rating-star";
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { format } from "date-fns";
 import MapCommentsList from "./map-comments-list";
+import { useAuth } from "@clerk/nextjs";
+import Link from "next/link";
 
 type FoodClientPageProps = {
     map: FoodMap
@@ -25,6 +22,7 @@ const FoodClientPage = ({
     comments,
     currentUser
 }: FoodClientPageProps) => {
+    const auth = useAuth();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -59,10 +57,15 @@ const FoodClientPage = ({
             <Separator className="my-4" />
             <div className="space-y-4">
                 <Label className="text-xl font-bold">Comments:</Label>
-                <MapCommentsList
-                    comments={comments}
-                    currentUser={currentUser}
-                />
+                {auth.isSignedIn
+                    ? <MapCommentsList
+                        comments={comments}
+                        currentUser={currentUser}
+                    />
+                    : <div className="w-full text-center font-semibold">
+                        You have to <Link href="/auth/sign-in" className="font-bold underline">sign in</Link> to see the comments.
+                    </div>
+                }
             </div>
         </div>
     );

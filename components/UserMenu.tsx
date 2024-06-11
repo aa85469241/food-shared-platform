@@ -17,6 +17,7 @@ import {
 } from "./ui/dropdown-menu";
 import { routes } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 type UserMenuProps = {
     userImageUrl: string | undefined
@@ -70,7 +71,10 @@ const UserMenu = ({ userImageUrl }: UserMenuProps) => {
                     className="flex items-center justify-end space-x-2"
                     onClick={() => {
                         signOut()
-                            .then(() => router.push("/"))
+                            .then(() => {
+                                router.push("/")
+                                router.refresh();
+                            })
                     }}>
                     <ArrowUpLeftFromCircle size={15} className="text-destructive" />
                     <p className="font-bold text-destructive">Sign out</p>

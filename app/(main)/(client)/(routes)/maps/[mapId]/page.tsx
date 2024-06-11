@@ -17,10 +17,10 @@ const FoodPage = async ({
 }: FoodPageProps) => {
     const map = await getMap(params.mapId);
     const comments = await getComments();
-    const commentsThisMap = comments.filter(c => c.mapId === params.mapId);
-
     const profile = await getProfile();
-    const initialComments = profile.comments.find(c => c.map.id === params.mapId);
+    
+    const commentsThisMap = comments.filter(c => c.mapId === params.mapId);
+    const initialComments = profile?.comments.find(c => c.map.id === params.mapId);
 
     return (
         <div className="container-div">

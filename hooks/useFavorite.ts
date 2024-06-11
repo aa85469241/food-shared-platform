@@ -32,6 +32,7 @@ export const useFavorite = ({
 
         if (!currentUser) {
             router.push("/auth/sign-in")
+            return;
         }
 
         if (ownMapIds.includes(mapId)) {

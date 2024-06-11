@@ -7,6 +7,8 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CommentValue, TProfile } from "@/types";
 import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type RateAndCommentProps = {
     comments: CommentValue[]
@@ -19,6 +21,8 @@ const RateAndComment = ({
     currentUser,
     profileId
 }: RateAndCommentProps) => {
+    const auth = useAuth();
+    const router = useRouter();
     const commentModal = useCommentModal();
     const rating = useRating();
     const [hover, setHover] = useState<number>(0);
@@ -49,7 +53,13 @@ const RateAndComment = ({
                             onMouseEnter={() => setHover(currentRating)}
                             onMouseLeave={() => setHover(0)}
                             onClick={() => {
-                                if (profileId === currentUser.id) {
+                                if (!auth.isSignedIn) {
+                                    router.push("/auth/sign-in")
+
+                                    return;
+                                }
+
+                                if (auth.isSignedIn && profileId === currentUser.id) {
                                     toast({
                                         title: "You cannot comment your food map."
                                     })
