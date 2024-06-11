@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 export const getProfile = async (): Promise<TProfile> => {
     const { userId } = auth();
 
-    const res = await fetch(`http://localhost:3000/api/auth/${userId}`);
+    const res = await fetch(`${process.env.NEXT_APP_PUBLIC_URL}/api/auth/${userId}`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch profile.")
