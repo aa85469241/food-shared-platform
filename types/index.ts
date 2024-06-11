@@ -1,4 +1,4 @@
-import { Image, HashTag } from "@prisma/client";
+import { Image, HashTag, Map } from "@prisma/client";
 
 export type TProfile = {
     id: string
@@ -37,9 +37,7 @@ export type UserComment = {
     id: string
     rating: number
     content: string
-    map: {
-        title: string
-    }
+    map: Map
     createdAt: Date
     updatedAt: Date
 }

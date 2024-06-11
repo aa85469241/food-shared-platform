@@ -8,7 +8,6 @@ import { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { CommentSchema } from "@/lib/schema";
-import { Comment } from "@prisma/client";
 import { Star } from "lucide-react";
 import { useCommentModal, useRating } from "@/hooks/useCommentModal";
 import Modal from "./Modal";
@@ -16,14 +15,15 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "../ui/use-toast";
+import { UserComment } from "@/types";
 
 type CommentFormValue = z.infer<typeof CommentSchema>
 
 type CommentModalProps = {
-    initialValues?: Comment
+    initialComments?: UserComment
 }
 
-const CommentModal = ({ initialValues }: CommentModalProps) => {
+const CommentModal = ({ initialComments }: CommentModalProps) => {
     const router = useRouter();
     const params = useParams();
     const commentModal = useCommentModal();
@@ -41,15 +41,15 @@ const CommentModal = ({ initialValues }: CommentModalProps) => {
         resolver: zodResolver(CommentSchema),
         mode: "onChange",
         defaultValues: {
-            content: initialValues ? initialValues.content : ""
+            content: initialComments ? initialComments.content : ""
         }
     })
 
-    const title = initialValues ? "Update Comment" : "Comment";
-    const description = initialValues ? "Update your comment." : "Share your feeling of this food."
+    const title = initialComments ? "Update Comment" : "Comment";
+    const description = initialComments ? "Update your comment." : "Share your feeling of this food."
 
     const onClose = () => {
-        if (!initialValues) {
+        if (!initialComments) {
             reset({ content: "" });
         }
         rating.setRating(0);
@@ -64,7 +64,7 @@ const CommentModal = ({ initialValues }: CommentModalProps) => {
 
     const onSubmit = async (values: CommentFormValue) => {
         try {
-            if (!initialValues) {
+            if (!initialComments) {
                 startTransition(async () => {
                     await axios.post(`/api/comments`, {
                         ...values,
@@ -77,7 +77,7 @@ const CommentModal = ({ initialValues }: CommentModalProps) => {
                 })
             } else {
                 startTransition(async () => {
-                    await axios.patch(`/api/comments/${initialValues.id}`, values);
+                    await axios.patch(`/api/comments/${initialComments.id}`, values);
                     toast({
                         title: "Successfully update your comment."
                     })
@@ -146,7 +146,7 @@ const CommentModal = ({ initialValues }: CommentModalProps) => {
             isOpen={commentModal.isOpen}
             close={onClose}
             disabled={isPending}
-            actionLabel={initialValues ? "Update" : "Submit"}
+            actionLabel={initialComments ? "Update" : "Submit"}
             onSubmit={handleSubmit(onSubmit)}
             form={formBody}
         />

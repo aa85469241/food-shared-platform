@@ -20,7 +20,7 @@ const FoodPage = async ({
     const commentsThisMap = comments.filter(c => c.mapId === params.mapId);
 
     const profile = await getProfile();
-    const initialValues = profile.comments.find(c => c.mapId === params.mapId);
+    const initialComments = profile.comments.find(c => c.map.id === params.mapId);
 
     return (
         <div className="container-div">
@@ -29,7 +29,7 @@ const FoodPage = async ({
                 comments={commentsThisMap}
                 currentUser={profile}
             />
-            <CommentModal initialValues={initialValues} />
+            <CommentModal initialComments={initialComments} />
         </div>
     );
 }
