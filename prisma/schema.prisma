@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model Profile {
+    id       String @id @default(auto()) @map("_id") @db.ObjectId
+    userId   String @unique
+    name     String
+    imageUrl String
+
+    firstName String?
+    lastName  String?
+    birth     String?
+
+    maps      Map[]
+    favorites Favorite[]
+    comments  Comment[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("profiles")
+}
+
+model Map {
+    id           String  @id @default(auto()) @map("_id") @db.ObjectId
+    profileId    String  @db.ObjectId
+    profile      Profile @relation(fields: [profileId], references: [id])
+    title        String
+    description  String
+    country      String
+    address      String?
+    lowestPrice  Int
+    highestPrice Int
+    isPublic     Boolean @default(true)
+
+    images    Image[]    @relation("ImagesToMap")
+    hashTags  HashTag[]  @relation("HashTagsToMap")
+    favorites Favorite[] @relation("FavoriteToMap")
+    commnets  Comment[]  @relation("CommnetsToMap")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("maps")
+}
+
+model HashTag {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    mapId     String?  @db.ObjectId
+    map       Map?     @relation("HashTagsToMap", fields: [mapId], references: [id], onDelete: Cascade)
+    name      String   
+    isPublic  Boolean
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Image {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    mapId     String   @db.ObjectId
+    map       Map      @relation("ImagesToMap", fields: [mapId], references: [id], onDelete: Cascade)
+    imgUrl    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Favorite {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    profileId String?  @db.ObjectId
+    profile   Profile? @relation(fields: [profileId], references: [id])
+    mapId     String?  @db.ObjectId
+    map       Map?     @relation("FavoriteToMap", fields: [mapId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+}
+
+model Comment {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    rating    Int      @default(0)
+    content   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    profileId String  @db.ObjectId
+    profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    mapId     String  @db.ObjectId
+    map       Map     @relation("CommnetsToMap", fields: [mapId], references: [id], onDelete: Cascade)
+}
