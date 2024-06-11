@@ -11,7 +11,7 @@ export type Query = {
 
 export const getMaps = async (query?: Query): Promise<FoodMap[]> => {
     const url = qs.stringifyUrl({
-        url: `${process.env.NEXT_APP_BASE_URL}/api/maps`,
+        url: "http://localhost:3000/api/maps",
         query: {
             country: query?.country,
             minPrice: query?.minPrice,

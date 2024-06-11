@@ -1,7 +1,7 @@
 import { Comment } from "@prisma/client";
 
 export const getComments = async (): Promise<Comment[]> => {
-    const res = await fetch(`${process.env.NEXT_APP_BASE_URL}/api/comments`);
+    const res = await fetch("http://localhost:3000/api/comments");
 
     if (!res.ok) {
         throw new Error("Failed to fetch comments.");

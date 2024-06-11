@@ -9,7 +9,7 @@ export const getFavorites = async (): Promise<TFavorite[]> => {
         redirect("/auth/sign-in");
     }
     
-    const res = await fetch(`${process.env.NEXT_APP_BASE_URL}/api/favorites/${profile.id}`);
+    const res = await fetch(`http://localhost:3000/api/favorites/${profile.id}`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch favorites.");
