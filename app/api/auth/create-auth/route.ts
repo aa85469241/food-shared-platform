@@ -9,21 +9,13 @@ export async function GET(request: Request) {
         return new NextResponse("User not found.", { status: 401 });
     }
 
-    let profile = await prisma.profile.findUnique({
-        where: {
-            userId: user.id
+    await prisma.profile.create({
+        data: {
+            userId: user.id,
+            name: `${user.username}`,
+            imageUrl: user.imageUrl,
         }
     })
 
-    if (!profile) {
-        await prisma.profile.create({
-            data: {
-                userId: user.id,
-                name: `${user.username}`,
-                imageUrl: user.imageUrl,
-            }
-        })
-    }
-
-    return NextResponse.redirect(`${process.env.NEXT_APP_BASE_URL}`)
+    return NextResponse.redirect(`${process.env.NEXT_APP_PUBLIC_URL}`);
 }

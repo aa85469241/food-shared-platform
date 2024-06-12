@@ -126,11 +126,6 @@ const CommentsCard = ({ comments }: CommentsCardProps) => {
                         </div>
                     )
                 })}
-                {getWeeklyComments().length === 0
-                    && <div className="w-full h-full font-semibold text-sm">
-                        You {"haven't"} posted any comments this week.
-                    </div>
-                }
             </CardContent>
             <CardFooter className="justify-end pb-2">
                 <div

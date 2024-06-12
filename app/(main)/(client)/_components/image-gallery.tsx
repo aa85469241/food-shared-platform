@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Image as ImageValue } from "@prisma/client";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type ImageGalleryProps = {
     images: ImageValue[]
@@ -45,6 +46,7 @@ const ImageGallery = ({
                         </div>
                     </CarouselItem>
                 ))}
+                <Skeleton />
             </CarouselContent>
             <div className="absolute inset-x-0 bottom-0 flex justify-center gap-2 pb-2">
                 {Array.from({ length: count })
