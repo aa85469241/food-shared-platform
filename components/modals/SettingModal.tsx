@@ -1,30 +1,29 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import axios from "axios";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PersonalInfoSchema } from "@/lib/schema";
-import axios from "axios";
-import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { AlertCircle, CalendarIcon, PencilLine } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useEffect, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { PersonalInfoSchema } from "@/lib/schema";
+import { useSettingModal } from "@/hooks/useSettingModal";
+import Modal from "./Modal";
+import Calendar from "../Calendar";
+import SelfieUploader from "@/app/(main)/(dashboard)/[userId]/_components/selfie-uploader";
 import { TProfile } from "@/types";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger
-} from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { toast } from "../ui/use-toast";
 import {
     Card,
-    CardContent,
-    CardFooter,
     CardHeader,
-    CardTitle
-} from "@/components/ui/card";
+    CardTitle,
+    CardContent,
+} from "../ui/card";
 import {
     Form,
     FormControl,
@@ -32,70 +31,66 @@ import {
     FormItem,
     FormLabel,
     FormMessage
-} from "@/components/ui/form";
-import SelfieUploader from "../selfie-uploader";
-import { useRouter } from "next/navigation";
-import Calendar from "@/components/Calendar";
+} from "../ui/form";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger
+} from "../ui/popover";
+import { Textarea } from "../ui/textarea";
 
 type PersonalInfoValues = z.infer<typeof PersonalInfoSchema>;
 
-type PersonalInfoProps = {
+type SettingModalProps = {
     data: TProfile
 }
 
-const PersonalInfo = ({
-    data
-}: PersonalInfoProps) => {
+const SettingModal = ({ data }: SettingModalProps) => {
     const router = useRouter();
-    const [mounted, setMounted] = useState(false);
-    const [edit, setEdit] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, [])
+    const settingModal = useSettingModal();
+    const [isPending, startTransition] = useTransition();
 
     const form = useForm<PersonalInfoValues>({
         resolver: zodResolver(PersonalInfoSchema),
-        defaultValues: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            birth: new Date(data.birth as string),
-        }
+        mode: "onChange",
     })
+
+    useEffect(() => {
+        if (data) {
+            form.reset({
+                firstName: data.firstName,
+                lastName: data.lastName ,
+                birth: new Date(data.birth as string),
+                description: data.description
+            });
+        }
+    }, [form, data])
 
     const onSubmit = async (values: PersonalInfoValues) => {
         try {
-            await axios.patch(`/api/auth/${data.userId}`, values)
-            toast({
-                title: "Update Personal Information Successfully."
+            startTransition(async () => {
+                await axios.patch(`/api/auth/${data.userId}`, values)
+                toast({
+                    title: "Update Personal Information Successfully."
+                })
+                router.refresh();
+                onClose();
             })
-            router.refresh();
         }
         catch (err) {
             console.log(err);
         }
-        finally {
-            setEdit(false);
-        }
     }
 
-    const handleOnEdit = () => {
-        if (!edit) {
-            setEdit(true);
-        } else {
-            form.reset();
-            setEdit(false);
-        }
+    const onClose = () => {
+        form.reset();
+        settingModal.close();
     }
 
-    if (!mounted) {
-        return null;
-    }
-
-    return (
-        <Card className="xl:col-span-7 relative w-full h-fit max-h-80">
+    let formBody = (
+        <Card className="relative w-full h-fit mt-2">
             <SelfieUploader
-                className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 z-20"
+                className="absolute top-0 right-0 translate-x-1 -translate-y-2 z-20"
                 selfie={data.imageUrl}
             />
             <CardHeader className="pt-3">
@@ -107,15 +102,6 @@ const PersonalInfo = ({
                         (ID: {data.name})
                     </div>
                 </CardTitle>
-                {(!data.firstName || !data.lastName || !data.birth)
-                    &&
-                    <div className="w-layout-hflex space-x-2 bg-destructive/50 rounded-full p-1 px-2">
-                        <AlertCircle className="text-primary" />
-                        <p className="text-primary font-semibold text-sm">
-                            Some of your personal info {"haven't"} been completed yet.
-                        </p>
-                    </div>
-                }
             </CardHeader>
             <CardContent className="space-y-4">
                 <Form {...form}>
@@ -124,11 +110,12 @@ const PersonalInfo = ({
                             name="firstName"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="font-bold">FirstName:</FormLabel>
+                                    <FormLabel className="font-bold">
+                                        FirstName:
+                                    </FormLabel>
                                     <FormControl>
                                         <Input
                                             className="max-w-xs"
-                                            disabled={!edit}
                                             {...field}
                                         />
                                     </FormControl>
@@ -143,7 +130,6 @@ const PersonalInfo = ({
                                     <FormControl>
                                         <Input
                                             className="max-w-xs"
-                                            disabled={!edit}
                                             {...field}
                                         />
                                     </FormControl>
@@ -162,7 +148,6 @@ const PersonalInfo = ({
                                     <PopoverTrigger asChild>
                                         <Button
                                             variant="outline"
-                                            disabled={!edit}
                                             className={cn("w-[240px] pl-3 text-left font-normal",
                                                 data.birth && "bg-white"
                                             )}
@@ -187,29 +172,43 @@ const PersonalInfo = ({
                             </FormItem>
                         )}
                     />
+                    <FormField
+                        name="description"
+                        render={({ field }) => (
+                            <FormItem className="relative">
+                                <FormLabel className="font-bold">
+                                    Introduce yourself:
+                                </FormLabel>
+                                <FormControl>
+                                    <Textarea 
+                                    placeholder="This guy is too lazy to post."
+                                    {...field} 
+                                    />
+                                </FormControl>
+                                <div className={cn("absolute bottom-1 right-4 text-sm font-medium", field.value.length > 300 && "text-destructive")}>
+                                    ({field.value.length}/50)
+                                </div>
+                            </FormItem>
+                        )}
+                    />
                 </Form>
             </CardContent>
-            <CardFooter className="justify-end space-x-4">
-                <Button
-                    size="icon"
-                    variant="ghost"
-                    className="font-semibold cursor-pointer rounded-full hover:underline"
-                    onClick={handleOnEdit}
-                >
-                    {edit ? "Cancel" : <PencilLine className="drop-shadow" />}
-                </Button>
-                <Button
-                    size="sm"
-                    type="submit"
-                    disabled={!edit}
-                    className="font-bold tracking-wider"
-                    onClick={form.handleSubmit(onSubmit)}
-                >
-                    Submit
-                </Button>
-            </CardFooter>
         </Card>
+    )
+
+    return (
+        <Modal
+            modalId="personal-info"
+            isOpen={settingModal.isOpen}
+            close={onClose}
+            title={`Welcome, ${data.name}`}
+            description="organize your personal data here."
+            disabled={isPending}
+            onSubmit={form.handleSubmit(onSubmit)}
+            actionLabel="Submit"
+            form={formBody}
+        />
     );
 }
 
-export default PersonalInfo;
+export default SettingModal;

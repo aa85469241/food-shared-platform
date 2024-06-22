@@ -49,11 +49,11 @@ const CommentsCard = ({ comments }: CommentsCardProps) => {
     }
 
     return (
-        <Card className="xl:col-span-5 w-full h-fit max-h-80 flex flex-col">
+        <Card className="w-full h-fit max-h-96 flex flex-col">
             <CardHeader className="pt-3 pb-0">
-                <CardTitle className="text-2xl">Comments</CardTitle>
+                <CardTitle className="text-2xl font-bold">Comments</CardTitle>
                 <CardDescription className="font-medium">
-                    The history of your comments
+                    The history of your comments.
                 </CardDescription>
                 <Separator />
                 <div className="flex justify-end">
@@ -126,6 +126,10 @@ const CommentsCard = ({ comments }: CommentsCardProps) => {
                         </div>
                     )
                 })}
+                {getWeeklyComments().length === 0
+                    && <p className="w-full font-semibold text-center text-sm mt-4 md:text-base">
+                        You did not make any comment in past {weekly} days.
+                    </p>}
             </CardContent>
             <CardFooter className="justify-end pb-2">
                 <div

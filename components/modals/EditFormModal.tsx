@@ -104,6 +104,7 @@ const EditFormModal = ({ initialValues }: EditFormModalProps) => {
                     description: "Your food map has been updated!"
                 })
                 router.refresh();
+                onClose();
             }
         }
         catch (err) {
@@ -111,7 +112,6 @@ const EditFormModal = ({ initialValues }: EditFormModalProps) => {
         }
         finally {
             setLoading(false);
-            onClose();
         }
     }
 

@@ -21,7 +21,7 @@ const MapList = ({ currentUser, maps }: MapListProps) => {
     }
 
     return (
-        <div className="mt-4 w-full grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-4">
+        <div className="mt-4 w-full grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 xl:gap-6">
             {maps.map((map) => (
                 <MapCard
                     key={map.id}

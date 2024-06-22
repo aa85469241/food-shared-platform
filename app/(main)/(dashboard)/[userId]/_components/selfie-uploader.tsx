@@ -46,7 +46,7 @@ const SelfieUploader = ({ selfie, className }: SelfieUploaderProps) => {
                     <div className="flex flex-col justify-between">
                         <button
                             type="submit"
-                            className="aspect-square bg-success border rounded-full p-1 hover:scale-110"
+                            className="aspect-square bg-success border rounded-sm p-1 hover:scale-110"
                             onClick={uploadSelfie}
                         >
                             <Check size={15} className="text-white" />
@@ -58,7 +58,7 @@ const SelfieUploader = ({ selfie, className }: SelfieUploaderProps) => {
                             <X size={15} className="text-white" />
                         </button>
                     </div>}
-                <Avatar className="relative w-20 h-20 border-2 md:w-24 md:h-24">
+                <Avatar className="relative w-28 h-24 border-2 rounded-sm md:w-32 md:h-28">
                     <AvatarImage
                         src={selfie}
                         alt="selfie"
@@ -82,7 +82,7 @@ const SelfieUploader = ({ selfie, className }: SelfieUploaderProps) => {
                                                 alt="uploading-image"
                                                 fill
                                                 sizes="auto"
-                                                className="rounded-full aspect-square"
+                                                className="rounded-sm aspect-square"
                                             />
                                         </div>
                                         :

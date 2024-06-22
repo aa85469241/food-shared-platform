@@ -1,6 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { format } from "date-fns";
 
 export async function GET(request: Request) {
     const user = await currentUser();
@@ -14,6 +15,10 @@ export async function GET(request: Request) {
             userId: user.id,
             name: `${user.username}`,
             imageUrl: user.imageUrl,
+            firstName: "GUEST",
+            lastName: `${user.id.slice(-6)}`,
+            birth: new Date().toUTCString(),
+            description: "This guy is too lazy to post.",
         }
     })
 

@@ -8,13 +8,12 @@ const EmptyList = () => {
     const modal = useModal();
 
     return (
-        <div className="w-full space-y-4 font-medium tracking-wide">
-            <p>You {"haven't"} shared anything yet.</p>
-            <p>Start to <Button
+        <div className="w-full font-medium tracking-wide leading-10">
+            <p>You {"haven't"} shared anything yet. Click <Button
                 size="sm"
-                className="mx-2"
                 onClick={modal.open}
-            > share your food map</Button> with others.</p>
+            > share your food map</Button> to share with others.</p>
+
         </div>
     );
 }

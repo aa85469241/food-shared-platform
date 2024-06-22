@@ -75,11 +75,47 @@ const ListItem = ({ data, setInitialValues }: ListItemProps) => {
                     />
                 </div>
                 <div className="relative flex flex-col justify-between w-full px-4 py-1 overflow-x-hidden">
-                    <div
-                        className="font-bold text-xl whitespace-nowrap cursor-pointer hover:underline hover:underline-offset-1"
-                        onClick={() => router.push(`/maps/${data.id}`)}
-                    >
-                        {data.title}
+                    <div className="w-full flex items-center justify-between gap-x-2">
+                        <div
+                            className="font-bold text-xl whitespace-nowrap line-clamp-1 cursor-pointer hover:underline hover:underline-offset-1"
+                            onClick={() => router.push(`/maps/${data.id}`)}
+                        >
+                            {data.title}
+                        </div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="hover:scale-110 active:scale-95">
+                                    <CircleEllipsis className="rotate-90" />
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="mr-8 bg-background">
+                                <DropdownMenuLabel className="font-bold">
+                                    Action
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    className="font-semibold p-2"
+                                    onClick={() => {
+                                        setInitialValues(data);
+                                        editModal.open();
+                                    }}
+                                >
+                                    Edit
+                                    <DropdownMenuShortcut>
+                                        <Edit3 size={18} />
+                                    </DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="font-semibold p-2"
+                                    onClick={() => setShowAlert(true)}
+                                >
+                                    Delete
+                                    <DropdownMenuShortcut>
+                                        <Trash size={18} />
+                                    </DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                     <StatusToggler
                         mapId={data.id}
@@ -99,40 +135,6 @@ const ListItem = ({ data, setInitialValues }: ListItemProps) => {
                             </div>
                         </div>
                     </div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <button className="absolute right-1 top-1 hover:scale-110 active:scale-95">
-                                <CircleEllipsis className="rotate-90" />
-                            </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="mr-8 bg-background">
-                            <DropdownMenuLabel className="font-bold">
-                                Action
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                className="font-semibold p-2"
-                                onClick={() => {
-                                    setInitialValues(data);
-                                    editModal.open();
-                                }}
-                            >
-                                Edit
-                                <DropdownMenuShortcut>
-                                    <Edit3 size={18} />
-                                </DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="font-semibold p-2"
-                                onClick={() => setShowAlert(true)}
-                            >
-                                Delete
-                                <DropdownMenuShortcut>
-                                    <Trash size={18} />
-                                </DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
             </motion.div>
             <AlertModal

@@ -29,13 +29,13 @@ const FavoritesCard = ({
     const router = useRouter();
 
     return (
-        <Card className="max-h-80 h-fit">
+        <Card className="max-h-96 h-fit">
             <CardHeader className="pt-3">
-                <CardTitle className="text-2xl">Favorites</CardTitle>
+                <CardTitle className="text-2xl font-bold">Favorites</CardTitle>
                 <CardDescription>The history of you add to your favorite list.</CardDescription>
                 <Separator />
             </CardHeader>
-            <CardContent className="flex flex-wrap space-x-2 overflow-y-scroll">
+            <CardContent className="flex flex-wrap gap-2 overflow-y-scroll">
                 {favorites.map((favor, index) => (
                     <Button key={favor.id} className="w-fit h-max flex items-center gap-x-2 border rounded-sm shadow pl-1 pr-3 py-1">
                         <Avatar className="w-8 h-8">
@@ -55,6 +55,11 @@ const FavoritesCard = ({
                         </div>
                     </Button>
                 ))}
+                {favorites.length === 0
+                    && <p className="w-full font-semibold text-center text-sm mt-4 md:text-base">
+                        Your favorite list is empty.
+                    </p>
+                }
             </CardContent>
             <CardFooter className="justify-end pb-2">
                 <div

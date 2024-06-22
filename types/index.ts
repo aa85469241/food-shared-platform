@@ -1,4 +1,4 @@
-import { Image, HashTag, Map } from "@prisma/client";
+import { Image, HashTag, Map, Favorite, Comment } from "@prisma/client";
 
 export type TProfile = {
     id: string
@@ -8,6 +8,7 @@ export type TProfile = {
     firstName?: string
     lastName?: string
     birth?: string
+    description?: string
     createdAt: Date
     updatedAt: Date
     maps: UserMap[]
@@ -54,8 +55,11 @@ export type FoodMap = {
     isPublic: boolean
     createdAt: Date
     updatedAt: Date
-    images: Image[],
-    hashTags: HashTag[],
+    images: Image[]
+    hashTags: HashTag[]
+    favorites: Favorite[]
+    comments: Comment[]
+    profile: TProfile
 }
 
 export type TFavorite = {

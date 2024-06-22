@@ -47,3 +47,45 @@ export const floatMenuVariants = {
         }
     }
 }
+
+export const clipPathVariants = {
+    open: {
+        width: "100%",
+        height: "100%",
+        clipPath: "circle(110% at 100% 100%)",
+    },
+    closed: {
+        width: "50%",
+        height: "30%",
+        clipPath: "polygon(100% 10%, 0% 100%, 100% 100%)",
+    }
+}
+
+export const innerClipPathVariants = {
+    open: {
+        width: "100%",
+        height: "100%",
+        clipPath: "circle(110% at 100% 100%)",
+    },
+    closed: {
+        width: "100%",
+        height: "100%",
+        clipPath: "polygon(100% 12%, 2% 100%, 100% 100%)",
+    }
+}
+
+export const textMoveUp = {
+    open: (custom: number) => ({
+        y: 0,
+        transition: {
+            duration: 0.5,
+            delay: 0.35 * custom
+        }
+    }),
+    closed: {
+        y: "100%",
+        transition: {
+            duration: 0.5,
+        }
+    }
+}

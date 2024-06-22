@@ -49,6 +49,9 @@ const config = {
                     DEFAULT: "hsl(var(--success))",
                 },
             },
+            backgroundImage: {
+                "gradient-image": "url('../public/images/gradient-background.jpg')"
+            },
             borderRadius: {
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",

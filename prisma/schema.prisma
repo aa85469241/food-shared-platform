@@ -20,9 +20,10 @@ model Profile {
     name     String
     imageUrl String
 
-    firstName String?
-    lastName  String?
-    birth     String?
+    firstName   String?
+    lastName    String?
+    birth       String?
+    description String?
 
     maps      Map[]
     favorites Favorite[]
@@ -49,7 +50,7 @@ model Map {
     images    Image[]    @relation("ImagesToMap")
     hashTags  HashTag[]  @relation("HashTagsToMap")
     favorites Favorite[] @relation("FavoriteToMap")
-    commnets  Comment[]  @relation("CommnetsToMap")
+    comments  Comment[]  @relation("CommentsToMap")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -95,5 +96,5 @@ model Comment {
     profileId String  @db.ObjectId
     profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
     mapId     String  @db.ObjectId
-    map       Map     @relation("CommnetsToMap", fields: [mapId], references: [id], onDelete: Cascade)
+    map       Map     @relation("CommentsToMap", fields: [mapId], references: [id], onDelete: Cascade)
 }

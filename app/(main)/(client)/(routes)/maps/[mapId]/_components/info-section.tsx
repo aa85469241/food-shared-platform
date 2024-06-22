@@ -4,12 +4,13 @@ import { priceFormat } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import useFavorite from "@/hooks/useFavorite";
 import { CommentValue, FoodMap, TProfile } from "@/types";
-import { Heart, MapPin } from "lucide-react";
+import { Heart, MapPin, User, UserCog } from "lucide-react";
 import RateAndComment from "./rate-and-comment";
 import TooltipButton from "@/components/TooltipButton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
+import MapOwnerInfoCard from "./map-owner-info-card";
 
 type InfoSectionProps = {
     map: FoodMap
@@ -19,6 +20,7 @@ type InfoSectionProps = {
 
 const InfoSection = ({ map, comments, currentUser }: InfoSectionProps) => {
     const router = useRouter();
+    const isPublisher = (map.profile.id === currentUser?.id)
     const { isFavorite, toggleFavorite } = useFavorite({
         currentUser,
         mapId: map.id
@@ -26,19 +28,23 @@ const InfoSection = ({ map, comments, currentUser }: InfoSectionProps) => {
 
     return (
         <div className="w-full space-y-3 pt-2 md:px-4 md:space-y-4">
-            <div className="flex items-end space-x-2">
-                <h1 className="text-3xl font-bold">{map.title}</h1>
-                <TooltipButton content="toggle-favorite">
-                    <Button
-                        size="icon"
-                        variant="ghost"
-                        className="rounded-full"
-                        onClick={toggleFavorite}
-                    >
-                        <Heart className={cn(isFavorite ? "fill-destructive text-destructive" : "fill-none")} />
-                    </Button>
-                </TooltipButton>
+            <div className="w-fill flex flex-col">
+                <div className="flex justify-between space-x-2">
+                    <h1 className="text-3xl font-bold">{map.title}</h1>
+                    <TooltipButton content="toggle-favorite">
+                        <Button
+                            size="icon"
+                            variant="ghost"
+                            disabled={isPublisher}
+                            className="rounded-full"
+                            onClick={toggleFavorite}
+                        >
+                            <Heart className={cn("stroke-1 stroke-primary", isFavorite ? "fill-destructive text-destructive" : "fill-none")} />
+                        </Button>
+                    </TooltipButton>
+                </div>
             </div>
+            <MapOwnerInfoCard profile={map.profile} />
             <div className="w-layout-hflex font-semibold">
                 <MapPin size={20} />
                 <div>{map.country}</div>

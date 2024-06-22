@@ -26,4 +26,5 @@ export const PersonalInfoSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
     birth: z.date(),
+    description: z.string().max(50),
 })

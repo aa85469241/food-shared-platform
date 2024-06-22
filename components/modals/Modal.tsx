@@ -69,9 +69,12 @@ const Modal = ({
             id="wrapper"
             className={cn("fixed inset-0 bg-primary/80 items-center justify-center z-50", `${isOpen ? "flex" : "hidden"}`)}
         >
-            <Card id={modalId} className={cn("max-w-sm w-full md:max-w-lg",
-                `${isOpen && "animate-zoom-in"}`
-            )}>
+            <Card
+                id={modalId}
+                className={cn("max-w-md w-full md:max-w-lg",
+                    `${isOpen && "animate-zoom-in"}`
+                )}
+            >
                 <CardHeader className="relative pt-2 pb-3">
                     <div
                         className="absolute top-4 right-4 hover:scale-110"

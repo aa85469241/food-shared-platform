@@ -17,6 +17,7 @@ export async function GET(
             include: {
                 images: true,
                 hashTags: true,
+                profile: true,
             }
         })
 

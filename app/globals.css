@@ -141,3 +141,23 @@ input[type="number"]::-webkit-inner-spin-button {
         @apply bg-background text-foreground;
     }
 }
+
+#timeline::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1.5px;
+    width: 3px;
+    background-color: black;
+    border-radius: 20px;
+    animation: movedown 1s linear forwards;
+}
+
+@keyframes movedown {
+    from {
+        height: 0;
+    }
+    to {
+        height: 100%;
+    }
+}

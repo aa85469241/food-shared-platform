@@ -66,7 +66,7 @@ export async function PATCH(
 ) {
     try {
         const body = await req.json();
-        const { firstName, lastName, birth } = body;
+        const { firstName, lastName, birth, description } = body;
 
         if (!params.userId) {
             return new NextResponse("Authentication Error!", { status: 401 });
@@ -86,6 +86,7 @@ export async function PATCH(
                 firstName,
                 lastName,
                 birth,
+                description,
             }
         })
 

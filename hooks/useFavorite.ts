@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation"
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
@@ -15,6 +15,7 @@ export const useFavorite = ({
     mapId,
 }: IUseFavoriteProps) => {
     const router = useRouter();
+    const [onToggle, setOnToggle] = useState(false);
 
     const favoriteIds = currentUser?.favorites.map(f => f.map.id);
     const ownMapIds = currentUser?.maps.map(m => m.id);
@@ -44,6 +45,8 @@ export const useFavorite = ({
         }
 
         try {
+            setOnToggle(true);
+
             if (!isFavorite) {
                 await axios.post(`/api/favorites/toggle-favorite/${mapId}`, {
                     mapId: mapId
@@ -51,17 +54,19 @@ export const useFavorite = ({
             } else {
                 await axios.delete(`/api/favorites/toggle-favorite/${mapId}`)
             }
-
-            router.refresh();
             toast({
                 title: 'Toggle Favorite success.'
             })
+            router.refresh();
         }
         catch (err) {
             toast({
                 title: "Error occurred!",
                 description: `${err}`
             })
+        }
+        finally {
+            setOnToggle(false);
         }
 
     }, [
@@ -73,6 +78,7 @@ export const useFavorite = ({
     ])
 
     return {
+        onToggle,
         isFavorite,
         toggleFavorite
     }

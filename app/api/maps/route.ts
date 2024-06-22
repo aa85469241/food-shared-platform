@@ -96,9 +96,11 @@ export async function GET(req: Request) {
                 } : undefined
             },
             include: {
+                profile: true,
                 images: true,
                 hashTags: true,
-                favorites: true
+                favorites: true,
+                comments: true,
             },
             orderBy: {
                 country: "desc"
