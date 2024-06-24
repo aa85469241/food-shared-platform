@@ -5,14 +5,15 @@ import { TProfile } from "@/types";
 import { Cake, CalendarDays, UserCog } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 
-type MapOwnerInfoCardProps = {
+type MemberInfoCardProps = {
     profile: TProfile
 }
 
-const MapOwnerInfoCard = ({
+const MemberInfoCard = ({
     profile
-}: MapOwnerInfoCardProps) => {
+}: MemberInfoCardProps) => {
 
     return (
         <Dialog>
@@ -31,15 +32,16 @@ const MapOwnerInfoCard = ({
                             sizes="auto"
                             className="object-cover"
                         />
+                        <Skeleton />
                     </div>
-                    <div className="w-full flex flex-col items-center pt-2">
+                    <div className="w-full flex flex-col items-center pt-1">
                         <h1 className="text-lg font-bold">
                             {profile.firstName} {profile.lastName}
                         </h1>
-                        <div className="flex items-center gap-x-2">
-                            <Cake size={18} /> {format(new Date(profile.birth!), "yyyy-MM-dd")}
+                        <div className="flex items-center gap-x-2 text-sm mb-1">
+                            <Cake size={15} /> {format(new Date(profile.birth!), "yyyy-MM-dd")}
                         </div>
-                        <div>{profile.description}</div>
+                        <div className="text-sm font-semibold">{profile.description}</div>
                     </div>
                 </div>
                 <div className="flex items-center justify-end gap-x-2 text-sm">
@@ -50,4 +52,4 @@ const MapOwnerInfoCard = ({
     );
 }
 
-export default MapOwnerInfoCard;
+export default MemberInfoCard;

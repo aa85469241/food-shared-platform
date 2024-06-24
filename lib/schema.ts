@@ -26,5 +26,5 @@ export const PersonalInfoSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
     birth: z.date(),
-    description: z.string().max(50),
+    description: z.string().max(50, "Please don't enter more than 50 words."),
 })

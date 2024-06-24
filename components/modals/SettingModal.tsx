@@ -59,7 +59,7 @@ const SettingModal = ({ data }: SettingModalProps) => {
         if (data) {
             form.reset({
                 firstName: data.firstName,
-                lastName: data.lastName ,
+                lastName: data.lastName,
                 birth: new Date(data.birth as string),
                 description: data.description
             });
@@ -179,15 +179,18 @@ const SettingModal = ({ data }: SettingModalProps) => {
                                 <FormLabel className="font-bold">
                                     Introduce yourself:
                                 </FormLabel>
-                                <FormControl>
-                                    <Textarea 
-                                    placeholder="This guy is too lazy to post."
-                                    {...field} 
-                                    />
+                                <FormControl className="relative">
+                                    <div className="h-full">
+                                        <Textarea
+                                            placeholder="This guy is too lazy to post."
+                                            {...field}
+                                        />
+                                        <div className={cn("absolute bottom-1 right-4 text-sm font-medium", field.value.length > 50 && "text-destructive")}>
+                                            ({field.value.length}/50)
+                                        </div>
+                                    </div>
                                 </FormControl>
-                                <div className={cn("absolute bottom-1 right-4 text-sm font-medium", field.value.length > 300 && "text-destructive")}>
-                                    ({field.value.length}/50)
-                                </div>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />

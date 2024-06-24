@@ -1,6 +1,7 @@
 
 import { getProfile } from "@/actions/getProfile"
 import { getMaps } from "@/actions/getMaps"
+import { FileText, MessageSquareMore, ThumbsUp } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import Heading from "@/components/Heading"
 import CommentsCard from "../_components/cards/comments-card"
@@ -8,7 +9,7 @@ import FavoritesCard from "../_components/cards/favorites-card"
 import OverviewCard from "../_components/cards/overview-card"
 import PersonalCard from "../_components/cards/personal-card"
 import TimeLine from "../_components/cards/timeline"
-import { FileText, MessageSquareMore, ThumbsUp } from "lucide-react"
+import DangerZone from "@/app/(main)/(client)/(routes)/maps/[mapId]/_components/danger-zone"
 
 export const revalidate = 0;
 
@@ -21,7 +22,7 @@ const Dashboard = async () => {
     const commentsForYou = myMaps.flatMap(item => item.comments)
 
     return (
-        <>
+        <div className="pb-4">
             <Heading
                 title="Dashboard"
                 description="Organize your personal data here."
@@ -58,7 +59,8 @@ const Dashboard = async () => {
                     <FavoritesCard favorites={profile.favorites} />
                 </div>
             </div>
-        </>
+            <DangerZone userId={profile.userId} />
+        </div>
     )
 }
 

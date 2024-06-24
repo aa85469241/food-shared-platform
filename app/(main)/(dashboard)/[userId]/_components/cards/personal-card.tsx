@@ -77,13 +77,22 @@ const PersonalCard = ({
                                     </div>
                                     <div className="overflow-hidden">
                                         <motion.span
-                                            className="inline-flex font-bold"
+                                            className="inline-flex font-bold text-xs"
                                             custom={2}
                                             variants={textMoveUp}
                                         >
-                                            {"("} {data.birth
-                                                ? "birth: " + format(new Date(data.birth), "yyyy-MM-dd")
-                                                : "No birth data"} {")"}
+                                            {data.birth
+                                                ? "birth - " + format(new Date(data.birth), "PPP")
+                                                : "No birth data"}
+                                        </motion.span>
+                                    </div>
+                                    <div className="overflow-hidden">
+                                        <motion.span
+                                            className="inline-flex font-bold text-xs"
+                                            custom={2}
+                                            variants={textMoveUp}
+                                        >
+                                            Joined - {format(data.createdAt, "PPP")}
                                         </motion.span>
                                     </div>
                                     <div className="overflow-hidden mt-4">

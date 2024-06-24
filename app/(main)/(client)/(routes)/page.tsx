@@ -1,13 +1,12 @@
 
 import { Query, getMaps } from "@/actions/getMaps";
-import MapCard from "@/app/(main)/(client)/_components/map-card";
 import Heading from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
 import SearchFilter from "../_components/search-filter";
 import { getProfile } from "@/actions/getProfile";
 import MapList from "../_components/map-list";
 
-export const revalidate = 0;
+export const revalidate = 5;
 
 type HomeProps = {
     searchParams: Query

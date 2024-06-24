@@ -1,6 +1,5 @@
 'use client';
 
-import ProfileImageDefault from "@/public/images/profile-image-default.jpg"
 import { useClerk, useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowUpLeftFromCircle, LayoutDashboard } from "lucide-react";
@@ -17,7 +16,6 @@ import {
 } from "./ui/dropdown-menu";
 import { routes } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { revalidatePath } from "next/cache";
 
 type UserMenuProps = {
     userImageUrl: string | undefined

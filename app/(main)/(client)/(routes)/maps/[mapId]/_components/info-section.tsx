@@ -4,13 +4,13 @@ import { priceFormat } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import useFavorite from "@/hooks/useFavorite";
 import { CommentValue, FoodMap, TProfile } from "@/types";
-import { Heart, MapPin, User, UserCog } from "lucide-react";
-import RateAndComment from "./rate-and-comment";
+import { Heart, MapPin } from "lucide-react";
 import TooltipButton from "@/components/TooltipButton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
-import MapOwnerInfoCard from "./map-owner-info-card";
+import RateAndComment from "./rate-and-comment";
+import MemberInfoCard from "./member-info-card";
 
 type InfoSectionProps = {
     map: FoodMap
@@ -44,7 +44,7 @@ const InfoSection = ({ map, comments, currentUser }: InfoSectionProps) => {
                     </TooltipButton>
                 </div>
             </div>
-            <MapOwnerInfoCard profile={map.profile} />
+            <MemberInfoCard profile={map.profile} />
             <div className="w-layout-hflex font-semibold">
                 <MapPin size={20} />
                 <div>{map.country}</div>

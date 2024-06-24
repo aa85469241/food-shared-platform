@@ -22,7 +22,7 @@ const FloatMenu = () => {
     const [expand, setExpand] = useState(false);
 
     return (
-        <div className="fixed inset-x-0 bottom-0 z-20 w-full pb-4 pointer-events-none md:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-50 w-full pb-4 pointer-events-none md:hidden">
             <motion.div
                 ref={ref}
                 className="w-full flex justify-center"
