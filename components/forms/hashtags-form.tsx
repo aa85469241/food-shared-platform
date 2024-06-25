@@ -29,13 +29,17 @@ const HashTagsForm = ({
     onRemove,
     onSwitch,
 }: HashTagsFormProps) => {
-    const [hashTag, setHashTag] = useState<string>("");
+    const [hashTagInput, setHashTagInput] = useState<string>("");
     const [onInput, setOnInput] = useState(false);
 
     const handleOnAdd = () => {
-        if (hashTag === "") return;
+        if (hashTagInput === "") return;
 
-        const formattedHashTags = hashTag.split(/[,]+/);
+        let formattedHashTags = hashTagInput.split(/[,]+/);
+
+        for (let value of values) {
+            formattedHashTags = formattedHashTags.filter(tag => tag !== value.name)
+        }
 
         for (let tag of formattedHashTags) {
             if (tag.startsWith("#")) {
@@ -45,7 +49,7 @@ const HashTagsForm = ({
             onChange({ name: tag.trim(), isPublic: true });
         }
 
-        setHashTag("");
+        setHashTagInput("");
     }
 
     const switchTagState = (name: string) => {
@@ -109,9 +113,9 @@ const HashTagsForm = ({
                     </p>
                     <div className="relative flex items-center gap-2">
                         <Input
-                            value={hashTag}
+                            value={hashTagInput}
                             placeholder="Enter one or more tags"
-                            onChange={(e) => setHashTag(e.target.value)}
+                            onChange={(e) => setHashTagInput(e.target.value)}
                             onFocus={() => setOnInput(true)}
                             onBlur={() => setTimeout(() => {
                                 setOnInput(false)
@@ -122,40 +126,42 @@ const HashTagsForm = ({
                         </Button>
                     </div>
                     <div
-                        className={cn("w-full bg-white border rounded-md mt-1",
-                            !onInput ? "hidden" : "block"
+                        className={cn("w-full bg-white border rounded-md mt-1 overflow-scroll transition-all duration-500",
+                            (onInput && hashTagInput.length > 0)
+                                ? "max-h-fit opacity-100"
+                                : "max-h-0 opacity-0"
                         )}
                     >
-                        <div className="flex flex-wrap gap-2 w-full h-full p-2">
+                        <div className="flex flex-wrap gap-2 w-full h-fit p-2">
                             {hashtags?.filter((value) => {
-                                let tags = hashTag.split(",");
-                                const tag = value.name.replace("#", "")
+                                const input = hashTagInput.split(",");
+                                const currentInput = input[input.length - 1];
 
-                                for (let i = 0; i < tags.length; i++) {
-                                    if (value.name.includes(tags[i].trim()) && !tags[i].includes(tag)) {
-                                        return true;
-                                    }
+                                if (value.name.includes(currentInput.trim())) {
+                                    return true;
                                 }
+
                             }).map(tag => (
                                 <Button
                                     key={tag.id}
                                     className="font-bold text-xs"
-                                    onClick={() => setHashTag((current) => {
-                                        let tags = current.split(",");
-                                        const last = tags.pop() as string;
+                                    onClick={() =>
+                                        setHashTagInput((current) => {
+                                            let input = current.split(",");
+                                            const lastOfInput = input.pop() as string;
 
-                                        if (tags.length > 0) {
-                                            current = last.length === 0
-                                                ? current.slice(0)
-                                                : current.slice(0, -last.length)
+                                            if (input.length > 0) {
+                                                current = lastOfInput.length === 0
+                                                    ? current.slice(0)
+                                                    : current.slice(0, -lastOfInput.length)
 
-                                            current = current.concat(" ", tag.name);
-                                        } else {
-                                            current = tag.name;
-                                        }
+                                                current = current.concat(" ", tag.name);
+                                            } else {
+                                                current = tag.name;
+                                            }
 
-                                        return current
-                                    })}
+                                            return current
+                                        })}
                                 >
                                     {tag.name}
                                 </Button>

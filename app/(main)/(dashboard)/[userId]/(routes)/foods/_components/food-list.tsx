@@ -7,6 +7,7 @@ import EditFormModal from "@/components/modals/EditFormModal";
 import EmptyList from "./list-empty";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Clock, BadgePlus, Captions, ArrowUpWideNarrow, ArrowDownWideNarrow } from "lucide-react";
+import { HashTag } from "@prisma/client";
 
 const orderBy = [
     { condition: "Title", icon: Captions },
@@ -16,10 +17,12 @@ const orderBy = [
 
 type FoodListProps = {
     maps: FoodMap[]
+    hashtags: HashTag[] | undefined
 }
 
 const FoodList = ({
-    maps
+    maps,
+    hashtags
 }: FoodListProps) => {
     const [mounted, setMounted] = useState(false);
     const [initialValues, setInitialValues] = useState<FoodMap | undefined>();
@@ -144,7 +147,10 @@ const FoodList = ({
                 </div>
                 {maps.length === 0 && <EmptyList />}
             </div>
-            <EditFormModal initialValues={initialValues} />
+            <EditFormModal
+                initialValues={initialValues}
+                hashtags={hashtags}
+            />
         </>
     );
 }

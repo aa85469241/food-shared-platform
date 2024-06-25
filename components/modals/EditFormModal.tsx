@@ -16,6 +16,7 @@ import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { FoodMap as FoodMapValue } from "@/types";
 import { useEditModal } from "@/hooks/useEditModal";
+import { HashTag } from "@prisma/client";
 
 enum STEPS {
     COUNTRY = 0,
@@ -57,9 +58,10 @@ export type FoodMapValues = z.infer<typeof FoodMapSchema>;
 
 type EditFormModalProps = {
     initialValues: FoodMapValue | undefined
+    hashtags: HashTag[] | undefined
 }
 
-const EditFormModal = ({ initialValues }: EditFormModalProps) => {
+const EditFormModal = ({ initialValues, hashtags }: EditFormModalProps) => {
     const editModal = useEditModal();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -185,6 +187,7 @@ const EditFormModal = ({ initialValues }: EditFormModalProps) => {
             }
             {step === STEPS.HASHTAGS &&
                 <HashTagsForm
+                    hashtags={hashtags}
                     values={hashTags}
                     onChange={(value) => setValue("hashTags", [...getValues("hashTags"), {
                         name: value.name,
