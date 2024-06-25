@@ -124,7 +124,7 @@ const CommentsList = ({
                     </SelectContent>
                 </Select>
             </div>
-            <div className="w-full h-full grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
+            <div className="w-full h-full grid grid-cols-1 gap-4 xl:grid-cols-2">
                 {sortComments().map((comment, index) => (
                     <div
                         key={comment.id}

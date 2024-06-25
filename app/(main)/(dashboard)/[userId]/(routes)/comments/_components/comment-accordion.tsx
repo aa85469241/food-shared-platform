@@ -63,7 +63,7 @@ const CommentAccordion = ({
                                 {index}. {comment.map?.title}
                             </Link>
                             <div className="flex items-center">
-                                <button
+                                <div
                                     className="group"
                                     onClick={() => setRemoveAlert(true)}
                                 >
@@ -71,7 +71,7 @@ const CommentAccordion = ({
                                         size={18}
                                         className="mr-2 transition-colors text-slate-500 group-hover:text-primary"
                                     />
-                                </button>
+                                </div>
                                 <div className="font-semibold mr-1">
                                     {comment.rating}
                                 </div>
