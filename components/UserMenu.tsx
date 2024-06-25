@@ -16,6 +16,7 @@ import {
 } from "./ui/dropdown-menu";
 import { routes } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { toast } from "./ui/use-toast";
 
 type UserMenuProps = {
     userImageUrl: string | undefined
@@ -70,6 +71,10 @@ const UserMenu = ({ userImageUrl }: UserMenuProps) => {
                     onClick={() => {
                         signOut()
                             .then(() => {
+                                toast({
+                                    title: "Sign out successfully",
+                                })
+
                                 router.push("/")
                                 router.refresh();
                             })

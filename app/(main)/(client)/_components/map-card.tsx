@@ -37,8 +37,8 @@ const MapCard = ({
                 position="absolute"
                 className="top-4 right-4"
             />
-            <div className="relative w-full h-full flex flex-col gap-1 px-3">
-                <div className="flex items-center justify-between">
+            <div className="relative w-full h-full flex flex-col gap-1">
+                <div className="flex items-center justify-between px-2">
                     <div className="line-clamp-1 text-xl font-bold md:text-2xl">
                         {data.title}
                     </div>
@@ -53,7 +53,7 @@ const MapCard = ({
                         </Button>
                     </TooltipButton>
                 </div>
-                <div className="px-1">
+                <div className="px-3">
                     <p className={cn("text-xs font-semibold tracking-wide text-primary/80 whitespace-pre-line md:text-sm",
                         collapse ? "line-clamp-none" : "line-clamp-1"
                     )}>
@@ -68,10 +68,12 @@ const MapCard = ({
                         </span>
                     </div>
                 </div>
-                <div className="self-end text-xs font-semibold tracking-wide mt-3 mr-2 space-x-1 xl:text-sm md:space-x-2">
-                    <span>{priceFormat.format(data.lowestPrice)}</span>
-                    <span>~</span>
-                    <span>{priceFormat.format(data.highestPrice)}</span>
+                <div className="w-full mt-3 space-x-1 overflow-hidden">
+                    <div className="w-full flex justify-end text-xs font-semibold tracking-wide space-x-1 pr-2 xl:text-sm md:space-x-2 md:pr-4">
+                        <span>{priceFormat.format(data.lowestPrice)}</span>
+                        <span>~</span>
+                        <span>{priceFormat.format(data.highestPrice)}</span>
+                    </div>
                 </div>
             </div>
         </Card>
