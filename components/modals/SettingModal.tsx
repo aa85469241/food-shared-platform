@@ -94,7 +94,7 @@ const SettingModal = ({ data }: SettingModalProps) => {
                 selfie={data.imageUrl}
             />
             <CardHeader className="pt-3">
-                <CardTitle className="flex flex-col gap-x-1 text-xl tracking-wide">
+                <CardTitle className="flex flex-col gap-x-1 text-lg tracking-wide md:text-xl">
                     {(data.firstName || data.lastName)
                         ? (data.firstName! + " " + data.lastName!)
                         : "Guest"}

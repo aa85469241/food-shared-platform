@@ -58,7 +58,7 @@ const SelfieUploader = ({ selfie, className }: SelfieUploaderProps) => {
                             <X size={15} className="text-white" />
                         </button>
                     </div>}
-                <Avatar className="relative w-28 h-24 border-2 rounded-sm md:w-32 md:h-28">
+                <Avatar className="relative w-24 h-24 border-2 rounded-sm md:w-28 md:h-28">
                     <AvatarImage
                         src={selfie}
                         alt="selfie"

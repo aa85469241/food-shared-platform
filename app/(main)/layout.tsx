@@ -16,7 +16,7 @@ export default async function MainLayout({
         <div>
             <FormModal hashtags={hashtags} />
             <Navbar userImageUrl={profile ? profile.imageUrl : undefined} />
-            <main className="h-dvh">
+            <main>
                 {children}
             </main>
         </div>
