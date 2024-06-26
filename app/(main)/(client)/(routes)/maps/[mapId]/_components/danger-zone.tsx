@@ -5,10 +5,10 @@ import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import { useCountDown } from "@/hooks/useCountDown";
 import { useClerk } from "@clerk/nextjs";
 import axios from "axios";
 import { AlertCircle } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
@@ -22,6 +22,7 @@ const DangerZone = ({
     const router = useRouter();
     const { signOut } = useClerk();
     const [open, setOpen] = useState(false);
+    const { timer, timeout } = useCountDown(open, 5);
     const [isPending, startTransition] = useTransition();
 
     const deleteUser = async () => {
@@ -90,9 +91,10 @@ const DangerZone = ({
                     <Button
                         variant="destructive"
                         className="font-bold"
+                        disabled={timeout}
                         onClick={deleteUser}
                     >
-                        Delete
+                        <div>Delete ({timer})</div>
                     </Button>
                 }
             />

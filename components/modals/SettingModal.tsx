@@ -93,8 +93,8 @@ const SettingModal = ({ data }: SettingModalProps) => {
                 className="absolute top-0 right-0 translate-x-1 -translate-y-2 z-20"
                 selfie={data.imageUrl}
             />
-            <CardHeader className="pt-3">
-                <CardTitle className="flex flex-col gap-x-1 text-lg tracking-wide md:text-xl">
+            <CardHeader className="pt-3 px-3 md:px-6">
+                <CardTitle className="flex flex-col gap-x-1 text-base tracking-wide md:text-xl">
                     {(data.firstName || data.lastName)
                         ? (data.firstName! + " " + data.lastName!)
                         : "Guest"}
@@ -103,7 +103,7 @@ const SettingModal = ({ data }: SettingModalProps) => {
                     </div>
                 </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-3 md:px-6">
                 <Form {...form}>
                     <div className="w-full flex items-center gap-x-2">
                         <FormField
