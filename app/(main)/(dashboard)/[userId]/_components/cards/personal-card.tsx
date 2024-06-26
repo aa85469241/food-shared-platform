@@ -58,13 +58,13 @@ const PersonalCard = ({
                         {
                             open
                                 ? <motion.div
-                                    className="w-full h-full flex flex-col items-end justify-end p-4"
+                                    className="w-full h-full flex flex-col items-end justify-end p-2"
                                     initial="closed"
                                     animate="open"
                                 >
-                                    <div className="overflow-hidden">
+                                    <div className="overflow-hidden w-3/4 text-end">
                                         <motion.span
-                                            className="inline-flex font-bold"
+                                            className="inline-flex font-bold text-end text-sm md:text-base"
                                             custom={1}
                                             variants={textMoveUp}
                                         >
@@ -82,7 +82,7 @@ const PersonalCard = ({
                                             variants={textMoveUp}
                                         >
                                             {data.birth
-                                                ? "birth - " + format(new Date(data.birth), "PPP")
+                                                ? "birth - " + format(new Date(data.birth), "yyyy.MM.dd")
                                                 : "No birth data"}
                                         </motion.span>
                                     </div>
@@ -92,7 +92,7 @@ const PersonalCard = ({
                                             custom={2}
                                             variants={textMoveUp}
                                         >
-                                            Joined - {format(data.createdAt, "PPP")}
+                                            Joined - {format(data.createdAt, "yyyy.MM.dd")}
                                         </motion.span>
                                     </div>
                                     <div className="overflow-hidden mt-4">

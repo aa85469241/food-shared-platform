@@ -28,7 +28,7 @@ const FloatMenu = () => {
                 className="w-full flex justify-center"
             >
                 <motion.div
-                    className={cn("relative w-max bg-primary/90 rounded-lg flex items-center space-x-2 px-2 outline outline-offset-1 pointer-events-auto transition-opacity cursor-grab",
+                    className={cn("relative w-max max-w-full bg-primary/90 rounded-lg flex items-center space-x-2 px-2 outline outline-offset-1 pointer-events-auto transition-opacity cursor-grab",
                         expand
                             ? "opacity-100"
                             : "opacity-30 hover:opacity-100"
@@ -57,7 +57,7 @@ const FloatMenu = () => {
                             >
                                 <div className="relative flex items-center gap-2">
                                     <LayoutDashboard size={18} />
-                                    <p className="font-semibold uppercase">
+                                    <p className="font-semibold text-xs uppercase sm:text-sm">
                                         Dashboard
                                     </p>
                                 </div>
@@ -77,7 +77,7 @@ const FloatMenu = () => {
                                             variant: pathname === `/${userId}/${route.href}` ? "active" : "secondary"
                                         }))}
                                     >
-                                        <route.icon size={18} />
+                                        <route.icon className="size-3 sm:size-4" />
                                     </Button>
                                 </TooltipButton>
                             </div>

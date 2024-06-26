@@ -61,7 +61,7 @@ const DangerZone = ({
                 </CardHeader>
                 <CardContent>
                     <Alert
-                        className="flex items-center gap-2 justify-between"
+                        className="flex flex-col items-center gap-2 justify-between md:flex-row"
                         variant={open ? "destructive" : "default"}
                     >
                         <div className="w-layout-hflex gap-x-2">

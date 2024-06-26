@@ -39,7 +39,7 @@ const MapCard = ({
             />
             <div className="relative w-full h-full flex flex-col gap-1">
                 <div className="flex items-center justify-between px-2">
-                    <div className="line-clamp-1 text-xl font-bold overflow-x-hidden md:text-2xl">
+                    <div className="line-clamp-1 text-base font-bold overflow-x-hidden md:text-2xl">
                         {data.title}
                     </div>
                     <TooltipButton content="See details">

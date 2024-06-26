@@ -24,7 +24,7 @@ const MemberInfoCard = ({
             </DialogTrigger>
             <DialogContent className="max-w-md rounded-sm">
                 <div className="w-full grid grid-cols-[20%_auto]">
-                    <div className="relative w-24 h-24 border-2 rounded-sm">
+                    <div className="relative w-20 h-20 border-2 rounded-sm md:w-24 md:h-24">
                         <Image
                             src={profile.imageUrl}
                             alt={profile.name}
