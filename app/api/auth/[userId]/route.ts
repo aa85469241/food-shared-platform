@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function GET(
     req: Request,
@@ -78,9 +79,20 @@ export async function PATCH(
             }
         })
 
+        if (!profile) {
+            return new NextResponse("User not found!", { status: 401 });
+        }
+
+        await clerkClient.users.updateUser(
+            profile.userId,
+            {
+                firstName: firstName,
+                lastName: lastName,
+            })
+
         const newProfile = await prisma.profile.update({
             where: {
-                id: profile?.id
+                id: profile.id
             },
             data: {
                 firstName,

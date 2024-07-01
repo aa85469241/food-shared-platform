@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { format } from "date-fns";
 
 export async function GET(request: Request) {
     const user = await currentUser();

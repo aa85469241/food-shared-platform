@@ -28,3 +28,22 @@ export const PersonalInfoSchema = z.object({
     birth: z.date(),
     description: z.string().max(50, "Please don't enter more than 50 words."),
 })
+
+export const ResetSchema = z.object({
+    username: z.string().min(1, "Username is required."),
+    email: z.string().email({
+        message: "Email is required."
+    })
+})
+
+export const NewPasswordSchema = z.object({
+    password: z.string().min(6, {
+        message: "Minimum 6 characters required."
+    }),
+    confirmPassword: z.string().min(6, {
+        message: "Minimum 6 characters required."
+    }),
+}).refine((value) => value.password === value.confirmPassword, {
+    message: "Password not matching.",
+    path: ["confirmPassword"]
+})

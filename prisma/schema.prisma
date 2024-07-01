@@ -15,10 +15,10 @@ datasource db {
 }
 
 model Profile {
-    id       String @id @default(auto()) @map("_id") @db.ObjectId
-    userId   String @unique
-    name     String
-    imageUrl String
+    id             String @id @default(auto()) @map("_id") @db.ObjectId
+    userId         String @unique
+    name           String @unique
+    imageUrl       String
 
     firstName   String?
     lastName    String?
@@ -33,6 +33,16 @@ model Profile {
     updatedAt DateTime @updatedAt
 
     @@map("profiles")
+}
+
+model ResetPasswordToken {
+    id       String   @id @default(auto()) @map("_id") @db.ObjectId
+    username String
+    email    String
+    token    String   @unique
+    expires  DateTime
+
+    @@unique([username, email, token])
 }
 
 model Map {
